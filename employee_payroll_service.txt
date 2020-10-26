@@ -170,4 +170,76 @@ mysql> select gender,sum(salary) from employee_payroll group by gender;
 +--------+-------------+
 2 rows in set (0.00 sec)
 
+mysql> alter table employee_payroll
+    -> add column Phone_number double default 9876543210 not null;
+Query OK, 0 rows affected (1.73 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee_payroll
+    -> add column department varchar(20) default 'Managing' not null,
+    -> add column address varchar(30) default 'Pitampura' not null;
+Query OK, 0 rows affected (0.78 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> alter table employee_payroll
+    -> add column basic_pay double default 0 not null,
+    -> add column deductions double default 0 not null,
+    -> add column taxable_pay double default 0 not null,
+    -> add column income_tax double default 0 not null,
+    -> add column net_pay double default 0 not null;
+Query OK, 0 rows affected (0.53 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee_payroll
+    -> ;
++----+---------------+--------+------------+--------+--------------+------------+-----------+-----------+------------+-------------+------------+---------+
+| ID | Name          | Salary | Start_Date | Gender | Phone_number | department | address   | basic_pay | deductions | taxable_pay | income_tax | net_pay |
++----+---------------+--------+------------+--------+--------------+------------+-----------+-----------+------------+-------------+------------+---------+
+|  1 | Akshat Gupta  | 320000 | 2020-09-12 | Male   |   9876543210 | Managing   | Pitampura |         0 |          0 |           0 |          0 |       0 |
+|  2 | Amrinder Brar | 450000 | 2020-03-14 | Male   |   9876543210 | Managing   | Pitampura |         0 |          0 |           0 |          0 |       0 |
+|  3 | Ammy Virk     |  60000 | 2020-03-19 | Male   |   9876543210 | Managing   | Pitampura |         0 |          0 |           0 |          0 |       0 |
+|  4 | Neha Kakkar   |  60000 | 2020-05-11 | Female |   9876543210 | Managing   | Pitampura |         0 |          0 |           0 |          0 |       0 |
++----+---------------+--------+------------+--------+--------------+------------+-----------+-----------+------------+-------------+------------+---------+
+4 rows in set (0.05 sec)
+
+
+
+mysql> insert into employee_payroll(name,salary,start_date,gender,phone_number,department,address,basic_pay,deductions,taxable_pay,income_tax,net_pay)
+    -> values ('Terisa',32000,'2020-06-03','Male',9876543210,'Sales','Navi Mumbai',0,0,0,0,0);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into employee_payroll(name,salary,start_date,gender,phone_number,department,address,basic_pay,deductions,taxable_pay,income_tax,net_pay)
+    -> values ('Terisa',32000,'2020-06-03','Male',9876543210,'Marketing','Navi Mumbai',0,0,0,0,0);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select * from employee_payroll;
++----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
+| ID | Name          | Salary | Start_Date | Gender | Phone_number | department | address     | basic_pay | deductions | taxable_pay | income_tax | net_pay |
++----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
+|  1 | Akshat Gupta  | 320000 | 2020-09-12 | Male   |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  2 | Amrinder Brar | 450000 | 2020-03-14 | Male   |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  3 | Ammy Virk     |  60000 | 2020-03-19 | Male   |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  4 | Neha Kakkar   |  60000 | 2020-05-11 | Female |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  5 | Terisa        |  32000 | 2020-06-03 | Male   |   9876543210 | Sales      | Navi Mumbai |         0 |          0 |           0 |          0 |       0 |
+|  6 | Terisa        |  32000 | 2020-06-03 | Male   |   9876543210 | Marketing  | Navi Mumbai |         0 |          0 |           0 |          0 |       0 |
++----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update employee_payroll set gender = 'Female' where Name = 'Terisa';
+Query OK, 2 rows affected (0.09 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
+| ID | Name          | Salary | Start_Date | Gender | Phone_number | department | address     | basic_pay | deductions | taxable_pay | income_tax | net_pay |
++----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
+|  1 | Akshat Gupta  | 320000 | 2020-09-12 | Male   |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  2 | Amrinder Brar | 450000 | 2020-03-14 | Male   |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  3 | Ammy Virk     |  60000 | 2020-03-19 | Male   |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  4 | Neha Kakkar   |  60000 | 2020-05-11 | Female |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  5 | Terisa        |  32000 | 2020-06-03 | Female |   9876543210 | Sales      | Navi Mumbai |         0 |          0 |           0 |          0 |       0 |
+|  6 | Terisa        |  32000 | 2020-06-03 | Female |   9876543210 | Marketing  | Navi Mumbai |         0 |          0 |           0 |          0 |       0 |
++----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
+6 rows in set (0.00 sec)
 
