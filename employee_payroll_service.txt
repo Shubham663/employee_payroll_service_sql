@@ -380,5 +380,77 @@ Query OK, 1 row affected (0.14 sec)
 mysql> insert into empID_departmentId values (5,4);
 Query OK, 1 row affected (0.11 sec)
 
+mysql> select employee_id,employees.name,department.name from employees,department,empid_departmentid
+    -> where employee_id = empid and departmentid = id;
++-------------+---------------+-----------+
+| employee_id | name          | name      |
++-------------+---------------+-----------+
+|           1 | Akshat Gupta  | Managing  |
+|           2 | Amrinder Brar | Managing  |
+|           3 | Ammy Virk     | Managing  |
+|           4 | Neha Kakkar   | Managing  |
+|           5 | Terisa        | Sales     |
+|           5 | Terisa        | Marketing |
++-------------+---------------+-----------+
+6 rows in set (0.09 sec)
 
+mysql> select * from employees,department,empid_departmentid
+    -> where employee_id = empid and departmentid = id;
++-------------+---------------+--------+------------+--------+-----------+------------+-------------+------------+---------+--------------+-----------+-------------+----+-------+--------------+
+| Employee_id | name          | Salary | Start_date | gender | Basic_pay | Deductions | Taxable_pay | Income_tax | Net_pay | phone_number | name      | address     | id | empID | departmentID |
++-------------+---------------+--------+------------+--------+-----------+------------+-------------+------------+---------+--------------+-----------+-------------+----+-------+--------------+
+|           1 | Akshat Gupta  |  50000 | 2020-09-21 | Male   |     50000 |      30000 |       20000 |       3600 |   18400 |   9879879870 | Managing  | Pitampura   |  1 |     1 |            1 |
+|           2 | Amrinder Brar |  65000 | 2020-09-21 | Male   |     65000 |      25000 |       40000 |       7200 |   32800 |   9879873430 | Managing  | Pitampura   |  1 |     2 |            1 |
+|           3 | Ammy Virk     |  45000 | 2020-09-21 | Male   |     45000 |      25000 |       20000 |       3600 |   18400 |   9349873430 | Managing  | Pitampura   |  1 |     3 |            1 |
+|           4 | Neha Kakkar   | 450000 | 2020-09-21 | Female |    450000 |     100000 |      350000 |      35000 |  315000 |   9859873430 | Managing  | Navi Mumbai |  2 |     4 |            2 |
+|           5 | Terisa        |  45000 | 2020-09-21 | Female |     45000 |      25000 |       20000 |       3600 |   16400 |   9698873430 | Sales     | Navi Mumbai |  3 |     5 |            3 |
+|           5 | Terisa        |  45000 | 2020-09-21 | Female |     45000 |      25000 |       20000 |       3600 |   16400 |   9698873430 | Marketing | Shahpura    |  4 |     5 |            4 |
++-------------+---------------+--------+------------+--------+-----------+------------+-------------+------------+---------+--------------+-----------+-------------+----+-------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> select gender,count(gender) from employees group by gender;
++--------+---------------+
+| gender | count(gender) |
++--------+---------------+
+| Male   |             3 |
+| Female |             2 |
++--------+---------------+
+2 rows in set (0.07 sec)
+
+
+mysql> select gender,sum(salary) from employees group by gender;
++--------+-------------+
+| gender | sum(salary) |
++--------+-------------+
+| Male   |      160000 |
+| Female |      495000 |
++--------+-------------+
+2 rows in set (0.05 sec)
+
+mysql> select gender,avg(salary) from employees group by gender;
++--------+--------------------+
+| gender | avg(salary)        |
++--------+--------------------+
+| Male   | 53333.333333333336 |
+| Female |             247500 |
++--------+--------------------+
+2 rows in set (0.07 sec)
+
+mysql> select gender,min(salary) from employees group by gender;
++--------+-------------+
+| gender | min(salary) |
++--------+-------------+
+| Male   |       45000 |
+| Female |       45000 |
++--------+-------------+
+2 rows in set (0.07 sec)
+
+mysql> select gender,max(salary) from employees group by gender;
++--------+-------------+
+| gender | max(salary) |
++--------+-------------+
+| Male   |       65000 |
+| Female |      450000 |
++--------+-------------+
+2 rows in set (0.00 sec)
 
