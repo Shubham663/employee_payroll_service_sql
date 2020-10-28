@@ -243,3 +243,142 @@ mysql> select * from employee_payroll;
 +----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
 6 rows in set (0.00 sec)
 
+-----------------------------------------------------------------------------------------------------------------------------------------
+//Reopening the client
+
+
+mysql> show databases;
++--------------------------+
+| Database                 |
++--------------------------+
+| addressbook_service      |
+| employee_payroll_service |
+| information_schema       |
+| mysql                    |
+| performance_schema       |
+| sakila                   |
+| sys                      |
+| world                    |
++--------------------------+
+8 rows in set (0.01 sec)
+
+mysql> use employee_payroll_service
+Database changed
+
+
+mysql> show tables;
++------------------------------------+
+| Tables_in_employee_payroll_service |
++------------------------------------+
+| employee_payroll                   |
++------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee_payroll;
++----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
+| ID | Name          | Salary | Start_Date | Gender | Phone_number | department | address     | basic_pay | deductions | taxable_pay | income_tax | net_pay |
++----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
+|  1 | Akshat Gupta  | 320000 | 2020-09-12 | Male   |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  2 | Amrinder Brar | 450000 | 2020-03-14 | Male   |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  3 | Ammy Virk     |  60000 | 2020-03-19 | Male   |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  4 | Neha Kakkar   |  60000 | 2020-05-11 | Female |   9876543210 | Managing   | Pitampura   |         0 |          0 |           0 |          0 |       0 |
+|  5 | Terisa        |  32000 | 2020-06-03 | Female |   9876543210 | Sales      | Navi Mumbai |         0 |          0 |           0 |          0 |       0 |
+|  6 | Terisa        |  32000 | 2020-06-03 | Female |   9876543210 | Marketing  | Navi Mumbai |         0 |          0 |           0 |          0 |       0 |
++----+---------------+--------+------------+--------+--------------+------------+-------------+-----------+------------+-------------+------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> create table Department(
+    -> name varchar(20),
+    -> address varchar(20)
+    -> ,id varchar(20)
+    -> );
+Query OK, 0 rows affected (2.55 sec)
+
+mysql> Alter table Department
+    -> add Primary Key(id);
+Query OK, 0 rows affected (1.86 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table empId_departmentID(
+    -> empID int,
+    -> departmentID int);
+Query OK, 0 rows affected (0.57 sec)
+
+mysql> create table Employees(
+    -> Employee_id int primary key,
+    -> name varchar(30) not null default 'AiseHi',
+    -> Salary double not null default 100000,
+    -> Start_date date not null default '2020-01-06',
+    -> gender varchar(20) not null default 'Female',
+    -> Phone_number varchar(20) not null default 9876543210,
+    -> Basic_pay double not null default 0,
+    -> Deductions double not null default 0,
+    -> Taxable_pay double not null default 0,
+    -> Income_tax double not null default 0,
+    -> Net_pay double not null default 0
+    -> );
+Query OK, 0 rows affected (0.55 sec)
+
+mysql> alter table Employees
+    -> MODIFY column phone_number double;
+Query OK, 0 rows affected (2.54 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table department
+    -> modify id int;
+Query OK, 0 rows affected (3.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into department values ('Managing','Pitampura',1);
+Query OK, 1 row affected (0.27 sec)
+
+insert into Employees values(1,'Akshat Gupta',50000,'2020-09-21','Male',50000,30000,20000,3600,18400,1,9879879870);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> alter table empid_departmentid
+    -> add foreign key(empid) references employees(employee_id),
+    -> add foreign key(departmentid) references department(id);
+Query OK, 0 rows affected (3.46 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into empID_departmentId values (1,1);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into department values ('Managing','Navi Mumbai',2);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into department values ('Sales','Navi Mumbai',3);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into department values ('Marketing','Shahpura',4);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into Employees values(2,'Amrinder Brar',65000,'2020-09-21','Male',65000,25000,40000,7200,32800,9879873430);
+Query OK, 1 row affected (0.14 sec)
+
+insert into Employees values(3,'Ammy Virk',45000,'2020-09-21','Male',45000,25000,20000,3600,18400,9349873430);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into Employees values(4,'Neha Kakkar',450000,'2020-09-21','Female',450000,100000,350000,35000,315000,9859873430);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Employees values(5,'Terisa',45000,'2020-09-21','Female',45000,25000,20000,3600,16400,9698873430);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into empID_departmentId values (2,1);
+Query OK, 1 row affected (0.35 sec)
+
+mysql> insert into empID_departmentId values (3,1);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into empID_departmentId values (4,2);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into empID_departmentId values (5,3);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into empID_departmentId values (5,4);
+Query OK, 1 row affected (0.11 sec)
+
+
+
